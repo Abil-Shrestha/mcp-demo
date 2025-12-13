@@ -50,14 +50,10 @@ async function ensureMcp() {
           })
           .strict(),
         _meta: {
-          openai: {
-            widgetAccessible: true,
-            resultCanProduceWidget: true,
-            toolInvocation: {
-              invoking: "Opening market…",
-              invoked: "Market opened",
-            },
-          },
+          "openai/widgetAccessible": true,
+          "openai/resultCanProduceWidget": true,
+          "openai/toolInvocation/invoking": "Opening market…",
+          "openai/toolInvocation/invoked": "Market opened",
         },
       },
       async ({ market } = {}) => {

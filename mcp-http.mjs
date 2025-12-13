@@ -31,14 +31,10 @@ server.registerTool(
       })
       .strict(),
     _meta: {
-      openai: {
-        widgetAccessible: true,
-        resultCanProduceWidget: true,
-        toolInvocation: {
-          invoking: "Preparing widget…",
-          invoked: "Widget ready",
-        },
-      },
+      "openai/widgetAccessible": true,
+      "openai/resultCanProduceWidget": true,
+      "openai/toolInvocation/invoking": "Preparing widget…",
+      "openai/toolInvocation/invoked": "Widget ready",
     },
   },
   async ({ market } = {}) => {
