@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+
+    // Downloaded third-party static assets (not part of our source).
+    "polymarket.com/**",
   ]),
 ]);
 

@@ -1,26 +1,369 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+/* Polymarket tokens (extracted from their compiled CSS): base scales + semantic aliases. */
+@layer theme {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+      "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      "Liberation Mono", "Courier New", monospace;
+
+    /* Base radii/shadows */
+    --radius: 0.6rem;
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+    --shadow-md: 0 8px 16px #0000000f;
+
+    /* Base app tokens present in Polymarket */
+    --background: #ffffff;
+    --foreground: #030712;
+    --text: #18181b;
+    --text-disabled: #9f9fa9;
+    --border: #e5e7eb;
+    --input: #e5e7eb;
+    --ring: #030712;
+
+    /* Core scales (copied) */
+    --green-50: #ecf9f1;
+    --green-100: #caefd8;
+    --green-200: #a8e5be;
+    --green-300: #86dba5;
+    --green-400: #64d18b;
+    --green-500: #42c772;
+    --green-600: #30a159;
+    --green-700: #237641;
+    --green-800: #164b29;
+    --green-900: #091f11;
+
+    --blue-50: #e8eefe;
+    --blue-100: #becffb;
+    --blue-200: #94aff8;
+    --blue-300: #6a90f5;
+    --blue-400: #4071f3;
+    --blue-500: #1652f0;
+    --blue-600: #0c3ec1;
+    --blue-700: #092d8d;
+    --blue-800: #061c58;
+    --blue-900: #020b23;
+
+    --red-50: #fcebeb;
+    --red-100: #f7c8c8;
+    --red-200: #f2a4a4;
+    --red-300: #ec8080;
+    --red-400: #e75d5d;
+    --red-500: #e23939;
+    --red-600: #c61d1d;
+    --red-700: #951616;
+    --red-800: #640f0f;
+    --red-900: #330707;
+
+    --yellow-50: #fefcea;
+    --yellow-100: #fef9d2;
+    --yellow-200: #fef2a5;
+    --yellow-300: #fce978;
+    --yellow-400: #fade56;
+    --yellow-500: #f8d743;
+    --yellow-600: #d4ad16;
+    --yellow-700: #b18d0f;
+    --yellow-800: #8f6e09;
+    --yellow-900: #765905;
+
+    --neutral-0: #fff;
+    --neutral-50: #f4f5f6;
+    --neutral-100: #e6e8ea;
+    --neutral-200: #caced3;
+    --neutral-300: #aeb4bc;
+    --neutral-400: #939aa5;
+    --neutral-500: #77808d;
+    --neutral-600: #5f6772;
+    --neutral-700: #484e56;
+    --neutral-800: #31353a;
+    --neutral-900: #1a1c1f;
+    --neutral-950: #0e0f11;
+
+    --pink-50: #ff40801d;
+    --pink-500: #ff4080;
+
+    --brand-50: #e7edfd;
+    --brand-100: #c4d3fb;
+    --brand-200: #a1b9f9;
+    --brand-300: #7d9ff6;
+    --brand-400: #4e7df3;
+    --brand-500: #1452f0;
+    --brand-600: #1249d8;
+    --brand-700: #1041c0;
+    --brand-800: #0e39a8;
+    --brand-900: #0c3190;
+
+    /* Semantic surfaces */
+    --surface-1: var(--neutral-0);
+    --surface-2: var(--neutral-50);
+    --overlay-blur: 0px;
+    --overlay-bg-opacity: 100%;
+
+    /* Semantic colors (aligned to the Polymarket snippet names) */
+    --color-transparent: transparent;
+    --color-white: #fff;
+    --color-black: #000;
+
+    --color-neutral-0: var(--neutral-0);
+    --color-neutral-50: var(--neutral-50);
+    --color-neutral-100: var(--neutral-100);
+    --color-neutral-200: var(--neutral-200);
+    --color-neutral-300: var(--neutral-300);
+    --color-neutral-400: var(--neutral-400);
+    --color-neutral-500: var(--neutral-500);
+    --color-neutral-600: var(--neutral-600);
+    --color-neutral-700: var(--neutral-700);
+    --color-neutral-800: var(--neutral-800);
+    --color-neutral-900: var(--neutral-900);
+    --color-neutral-950: var(--neutral-950);
+
+    --color-brand-50: var(--brand-50);
+    --color-brand-100: var(--brand-100);
+    --color-brand-200: var(--brand-200);
+    --color-brand-300: var(--brand-300);
+    --color-brand-400: var(--brand-400);
+    --color-brand-500: var(--brand-500);
+    --color-brand-600: var(--brand-600);
+    --color-brand-800: var(--brand-800);
+    --color-brand-900: var(--brand-900);
+
+    --color-background: var(--color-neutral-0);
+    --color-surface-1: var(--surface-1);
+    --color-surface-2: var(--surface-2);
+    --color-surface-3: var(--color-neutral-200);
+
+    --color-bg-brand: var(--color-brand-500);
+    --color-bg-brand-hover: var(--color-brand-600);
+    --color-text-brand: var(--color-brand-500);
+    --color-text-brand-hover: var(--color-brand-600);
+
+    --color-text-primary: var(--color-neutral-950);
+    --color-text-secondary: var(--color-neutral-500);
+    --color-text-disabled: var(--color-neutral-300);
+    --color-text-inverse: var(--color-neutral-0);
+
+    --color-border: var(--color-neutral-100);
+    --color-border-hover: var(--color-neutral-200);
+    --color-border-active: var(--color-neutral-300);
+    --color-border-brand: var(--color-brand-500);
+
+    --blur-overlay: var(--overlay-blur);
+    --opacity-overlay: var(--overlay-bg-opacity);
+
+    --color-button-primary-bg: var(--color-bg-brand);
+    --color-button-primary-bg-hover: var(--color-bg-brand-hover);
+    --color-button-primary-text: var(--color-white);
+    --color-button-secondary-bg: var(--color-neutral-100);
+    --color-button-secondary-bg-hover: var(--color-neutral-200);
+    --color-button-secondary-text: var(--color-text-primary);
+    --color-button-tertiary-bg: var(--color-neutral-50);
+    --color-button-tertiary-bg-hover: var(--color-neutral-100);
+    --color-button-tertiary-text: var(--color-text-primary);
+    --color-button-ghost-bg: var(--color-transparent);
+    --color-button-ghost-bg-hover: var(--color-neutral-50);
+    --color-button-ghost-text: var(--color-text-primary);
+
+    --color-input-filled-bg: var(--color-neutral-50);
+    --color-input-filled-bg-hover: var(--color-neutral-100);
+    --color-input-filled-text-placeholder: var(--color-text-secondary);
+    --color-input-outlined-bg: var(--color-transparent);
+    --color-input-outlined-border: var(--color-border);
+
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+  }
+
+  /* Polymarket dark theme uses data-theme=dark; we also mirror via prefers-color-scheme. */
+  html[data-theme="dark"] {
+    --green-50: #213b3f;
+    --green-100: #275749;
+    --green-200: #2e7353;
+    --green-300: #358f5d;
+    --green-400: #3bab68;
+    --green-500: #43c773;
+    --green-600: #69d290;
+    --green-700: #91dead;
+    --green-800: #b8e9ca;
+    --green-900: #dff5e7;
+
+    --red-50: #312c39;
+    --red-100: #542e38;
+    --red-200: #773138;
+    --red-300: #9a3338;
+    --red-400: #be3537;
+    --red-500: #e13737;
+    --red-600: #e76363;
+    --red-700: #ee9090;
+    --red-800: #f5bcbc;
+    --red-900: #fbe8e8;
+
+    --blue-50: #1c2f4b;
+    --blue-100: #1a366c;
+    --blue-200: #193d8d;
+    --blue-300: #1744ae;
+    --blue-400: #164bcf;
+    --blue-500: #1452f0;
+    --blue-600: #4475f3;
+    --blue-700: #7398f6;
+    --blue-800: #a3bcf9;
+    --blue-900: #d3dffc;
+
+    --yellow-50: #333c37;
+    --yellow-100: #5a5933;
+    --yellow-200: #81772e;
+    --yellow-300: #a9952a;
+    --yellow-400: #d0b226;
+    --yellow-500: #f7d022;
+    --yellow-600: #f8da52;
+    --yellow-700: #fae483;
+    --yellow-800: #fcefb5;
+    --yellow-900: #fef9e6;
+
+    --neutral-0: #1d2b3a;
+    --neutral-50: #2f3f50;
+    --neutral-100: #3d5266;
+    --neutral-200: #4d657c;
+    --neutral-300: #5a738d;
+    --neutral-400: #72879f;
+    --neutral-500: #899cb2;
+    --neutral-600: #a9b9ca;
+    --neutral-700: #c8d5e3;
+    --neutral-800: #e7eef9;
+    --neutral-900: #f2f2f2;
+    --neutral-950: #fff;
+
+    --brand-50: #1e364a;
+    --brand-100: #1f3f56;
+    --brand-200: #214a67;
+    --brand-300: #23587a;
+    --brand-400: #256992;
+    --brand-500: #2c9cdb;
+    --brand-600: #56afe2;
+    --brand-700: #80c3e9;
+    --brand-800: #aad7f0;
+    --brand-900: #d4ebf7;
+
+    --surface-1: var(--neutral-0);
+    --surface-2: var(--neutral-50);
+    --overlay-blur: 0px;
+    --overlay-bg-opacity: 100%;
+
+    --background: #030712;
+    --foreground: #f9fafb;
+    --border: #1f2937;
+    --input: #1f2937;
+    --ring: #d1d5db;
+    --text: #f2f2f2;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+    }
+
+    html {
+      /* Apply the same token shifts as data-theme=dark when user prefers dark */
+      --green-50: #213b3f;
+      --green-100: #275749;
+      --green-200: #2e7353;
+      --green-300: #358f5d;
+      --green-400: #3bab68;
+      --green-500: #43c773;
+      --green-600: #69d290;
+      --green-700: #91dead;
+      --green-800: #b8e9ca;
+      --green-900: #dff5e7;
+
+      --red-50: #312c39;
+      --red-100: #542e38;
+      --red-200: #773138;
+      --red-300: #9a3338;
+      --red-400: #be3537;
+      --red-500: #e13737;
+      --red-600: #e76363;
+      --red-700: #ee9090;
+      --red-800: #f5bcbc;
+      --red-900: #fbe8e8;
+
+      --blue-50: #1c2f4b;
+      --blue-100: #1a366c;
+      --blue-200: #193d8d;
+      --blue-300: #1744ae;
+      --blue-400: #164bcf;
+      --blue-500: #1452f0;
+      --blue-600: #4475f3;
+      --blue-700: #7398f6;
+      --blue-800: #a3bcf9;
+      --blue-900: #d3dffc;
+
+      --yellow-50: #333c37;
+      --yellow-100: #5a5933;
+      --yellow-200: #81772e;
+      --yellow-300: #a9952a;
+      --yellow-400: #d0b226;
+      --yellow-500: #f7d022;
+      --yellow-600: #f8da52;
+      --yellow-700: #fae483;
+      --yellow-800: #fcefb5;
+      --yellow-900: #fef9e6;
+
+      --neutral-0: #1d2b3a;
+      --neutral-50: #2f3f50;
+      --neutral-100: #3d5266;
+      --neutral-200: #4d657c;
+      --neutral-300: #5a738d;
+      --neutral-400: #72879f;
+      --neutral-500: #899cb2;
+      --neutral-600: #a9b9ca;
+      --neutral-700: #c8d5e3;
+      --neutral-800: #e7eef9;
+      --neutral-900: #f2f2f2;
+      --neutral-950: #fff;
+
+      --brand-50: #1e364a;
+      --brand-100: #1f3f56;
+      --brand-200: #214a67;
+      --brand-300: #23587a;
+      --brand-400: #256992;
+      --brand-500: #2c9cdb;
+      --brand-600: #56afe2;
+      --brand-700: #80c3e9;
+      --brand-800: #aad7f0;
+      --brand-900: #d4ebf7;
+
+      --surface-1: var(--neutral-0);
+      --surface-2: var(--neutral-50);
+      --overlay-blur: 0px;
+      --overlay-bg-opacity: 100%;
+
+      --background: #030712;
+      --foreground: #f9fafb;
+      --border: #1f2937;
+      --input: #1f2937;
+      --ring: #d1d5db;
+      --text: #f2f2f2;
+    }
   }
 }
 
+/* Tailwind v4 token wiring: make semantic vars available as Tailwind colors/fonts. */
+@theme inline {
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-text-primary);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
 }
