@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { createUIResource } from "@mcp-ui/server";
 import { z } from "zod";
 
 type GlobalWithMcp = typeof globalThis & {
@@ -32,12 +33,35 @@ async function ensureMcp() {
       enableJsonResponse: true,
     });
 
+    const TEMPLATE_URI = "ui://mcp-ui-demo/market";
     const baseUrl = getWidgetBaseUrl();
+    const MARKET_WIDGET_URL = `${baseUrl}/widgets/market`;
 
-    async function getAppsSdkCompatibleHtml(path: string): Promise<string> {
-      const res = await fetch(`${baseUrl}${path}`);
-      return await res.text();
-    }
+    const appsSdkTemplate = createUIResource({
+      uri: TEMPLATE_URI,
+      encoding: "text",
+      adapters: { appsSdk: { enabled: true, config: { intentHandling: "prompt" } } },
+      content: {
+        type: "externalUrl",
+        iframeUrl: MARKET_WIDGET_URL,
+      },
+      metadata: {
+        "openai/widgetDescription": "Fake Polymarket-style trading UI (simulated)",
+        "openai/widgetPrefersBorder": true,
+      },
+    });
+
+    server.registerResource(
+      "demo_market_template",
+      TEMPLATE_URI,
+      {
+        title: "Demo market widget template",
+        description: "Apps SDK template that points to the hosted /widgets/market page.",
+      },
+      async () => ({
+        contents: [appsSdkTemplate.resource],
+      }),
+    );
 
     server.registerTool(
       "open_demo_market",
@@ -50,8 +74,8 @@ async function ensureMcp() {
           })
           .strict(),
         _meta: {
+          "openai/outputTemplate": TEMPLATE_URI,
           "openai/widgetAccessible": true,
-          "openai/resultCanProduceWidget": true,
           "openai/toolInvocation/invoking": "Opening market…",
           "openai/toolInvocation/invoked": "Market opened",
         },
@@ -61,12 +85,9 @@ async function ensureMcp() {
           typeof market === "string" && market.trim()
             ? market.trim()
             : "Will it rain in NYC tomorrow?";
-
-        const html = await getAppsSdkCompatibleHtml(
-          `/widgets/market?market=${encodeURIComponent(label)}`,
-        );
         return {
-          content: [{ type: "text", text: html }],
+          content: [{ type: "text", text: `Opened demo market widget: ${label}` }],
+          structuredContent: { market: label },
         };
       },
     );
