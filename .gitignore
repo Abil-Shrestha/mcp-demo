@@ -43,3 +43,6 @@ next-env.d.ts
 # downloaded third-party bundle (not part of source)
 /polymarket.com/
 
+# reference project (not part of source)
+/arcade-main/
+

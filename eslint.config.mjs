@@ -15,6 +15,9 @@ const eslintConfig = defineConfig([
 
     // Downloaded third-party static assets (not part of our source).
     "polymarket.com/**",
+
+    // Third-party reference project (not part of this app).
+    "arcade-main/**",
   ]),
 ]);
 
