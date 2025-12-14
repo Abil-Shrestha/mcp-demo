@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
-const baseURL = (process.env.WIDGET_BASE_URL ?? process.env.BASE_URL ?? "").replace(/\/$/, "");
+const baseURL = (
+  process.env.WIDGET_BASE_URL ??
+  process.env.BASE_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "")
+).replace(/\/$/, "");
 
 const nextConfig: NextConfig = {
   // Important for ChatGPT Apps SDK: the sandbox may load the page HTML into about:blank,
