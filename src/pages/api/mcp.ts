@@ -33,7 +33,8 @@ async function ensureMcp() {
       enableJsonResponse: true,
     });
 
-    const TEMPLATE_URI = "ui://mcp-ui-demo/market";
+    // Bump template URI to avoid ChatGPT-side caching of the widget template.
+    const TEMPLATE_URI = "ui://mcp-ui-demo/market-v2";
     const baseUrl = getWidgetBaseUrl();
     const MARKET_WIDGET_URL = `${baseUrl}/widgets/market-ssr`;
 
@@ -43,7 +44,7 @@ async function ensureMcp() {
       adapters: { appsSdk: { enabled: true, config: { intentHandling: "prompt" } } },
       content: {
         type: "externalUrl",
-        iframeUrl: MARKET_WIDGET_URL,
+        iframeUrl: `${MARKET_WIDGET_URL}?v=2`,
       },
       metadata: {
         "openai/widgetDescription": "Fake Polymarket-style trading UI (simulated)",
@@ -52,7 +53,7 @@ async function ensureMcp() {
     });
 
     server.registerResource(
-      "demo_market_template",
+      "demo_market_template_v2",
       TEMPLATE_URI,
       {
         title: "Demo market widget template",
