@@ -35,7 +35,7 @@ async function ensureMcp() {
 
     const TEMPLATE_URI = "ui://mcp-ui-demo/market";
     const baseUrl = getWidgetBaseUrl();
-    const MARKET_WIDGET_URL = `${baseUrl}/widgets/market`;
+    const MARKET_WIDGET_URL = `${baseUrl}/widgets/market-ssr`;
 
     const appsSdkTemplate = createUIResource({
       uri: TEMPLATE_URI,
